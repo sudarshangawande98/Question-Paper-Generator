@@ -15,16 +15,16 @@ img {
 </style>
 
 <body>
-	<div class="content-wrapper">
+	<div class="content-wrapper" >
 		<!-- Content -->
-		<div class="container-xxl flex-grow-1 container-p-y">
+		<div class="container-xxl flex-grow-1 container-p-y" style="background: lavender;">
 			<div class="row">
 				<div class="col-lg-8 mb-4 order-0">
 					<div class="card">
 						<div class="d-flex align-items-end row">
 							<div class="col-sm-7">
 								<div class="card-body">
-									<h3 class="card-title text-primary">Welcome To QBank.....!</h3>
+									<h3 class="card-title text-primary">Welcome To QBank.....Institute!</h3>
 
 									<p class="fw-bold">
 										<span class="fw-bold" style="color: black;"> Power Of Knowlege,knowlege of Power</span><br>
@@ -50,7 +50,7 @@ img {
 								<div class="card-body">
 									<div class="card-title d-flex align-items-start justify-content-between">
 										<div class="avatar flex-shrink-0">
-											<a href="/generate_question1"> 
+											<a href="#"> 
 												<img src="../assets/img/icons/unicons/pencil.png" alt="chart success" class="rounded" />
 											</a>
 										</div>
@@ -68,7 +68,7 @@ img {
 								<div class="card-body">
 									<div class="card-title d-flex align-items-start justify-content-between">
 										<div class="avatar flex-shrink-0">
-											<a href="/questionTable"> 
+											<a href="#"> 
 												<img src="../assets/img/icons/unicons/question.png" alt="Credit Card" class="rounded" />
 											</a>
 										</div>
@@ -102,12 +102,10 @@ img {
 											<img class="d-block w-100" src="../assets/img/elements/b.png" alt="First slide" height="400" />
 											<div class="carousel-caption d-none d-md-block"><br>
 												<h3>
-													<b>Power of knowledge and Knowledge of Power</b>
+													<b>OUR VISION</b>
 												</h3>
-												<p>the aim of the school is to impart "Power of
-												   knowledge" and "Knowledge of Power" to the youth. And hence
-												   the school gives emphasis on both, academic and military
-												   training.
+												<p>To emerge as the premier R&D institution for the design, development and 
+												   deployment of world class electronic and IT solutions for economic and human advancement.
 												</p>
 											</div>
 										</div>
@@ -115,10 +113,8 @@ img {
 											<img class="d-block w-100" src="../assets/img/elements/s.png" alt="Second slide" height="400" />
 											<div class="carousel-caption d-none d-md-block">
 												<h3></h3><br>
-												<p>the aim of the school is to impart "Power of
-													knowledge" and "Knowledge of Power" to the youth. And hence
-													the school gives emphasis on both, academic and military
-													training.
+												<p> Share experience and know-how to help build advanced competence in the 
+													areas of Electronics and Information Technology.
 												</p>
 											</div>
 										</div>
@@ -128,9 +124,8 @@ img {
 												<h3>
 													<b>Mission</b>
 												</h3>
-												<p>Making tomorrow's leaders through Academic
-													Excellence, Character Building, Military Training, and
-													Personality Development is our primary mission
+												<p> Achieve rapid and effective spread of knowledge by overcoming language 
+												    barriers through application of technologies.
 												</p>
 											</div>
 										</div>
@@ -182,7 +177,7 @@ img {
 								<div class="card-body">
 									<div class="card-title d-flex align-items-start justify-content-between">
 										<div class="avatar flex-shrink-0">
-											<a href="/TopicTable">
+											<a href="#">
 												<img src="../assets/img/icons/unicons/topic.png" class="rounded" />
 											</a>
 										</div>
@@ -195,31 +190,11 @@ img {
 								</div>
 							</div>
 						</div>
-						<div class="col-12 mb-4">
-							<div class="card">
-								<div class="card-body">
-									<div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
-										<div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
-											<div class="card-title">
-												<h5 class="text-nowrap mb-2">Test Report</h5>
-												<span class="badge bg-label-warning rounded-pill">2</span>
-											</div>
-											<div class="mt-sm-auto">
-												<small class="text-success text-nowrap fw-semibold">
-													<i class="bx bx-chevron-up"></i></small>
-												<h3 class="mb-0"></h3>
-											</div>
-											</div>
-										<div id="profileReportChart"></div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-			<div class="row"></div>
+		<div class="row"></div>
 	</div>
 </body>
 </html>

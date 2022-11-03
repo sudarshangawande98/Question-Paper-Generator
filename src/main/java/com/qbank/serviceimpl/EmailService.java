@@ -26,7 +26,6 @@ public class EmailService {
 	public boolean sendEmail(String subject,String message,String to) {
 
 		boolean f=false;
-		
 		String from="sudarshangawande98@gmail.com";
 		
 		//Variable for gmail
@@ -46,7 +45,7 @@ public class EmailService {
 		Session session=Session.getInstance(properties, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {				
-				return new PasswordAuthentication("sudarshangawande98@gmail.com","sudarshangawande98");
+				return new PasswordAuthentication("sudarshangawande98@gmail.com","ysbvgxcjbivymyma");
 			}	
 		});
 		session.setDebug(true);
@@ -55,7 +54,6 @@ public class EmailService {
 		MimeMessage m = new MimeMessage(session);
 		
 		try {
-		
 			//from email
 			m.setFrom(from);
 			

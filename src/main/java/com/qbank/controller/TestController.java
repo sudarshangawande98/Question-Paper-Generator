@@ -53,80 +53,6 @@ public class TestController  {
 	@Autowired
 	DifficultyLevelService difficultyLevelService;
 
-	@RequestMapping(value = "/createTest")
-	public ModelAndView createTest( Model m, @ModelAttribute("testMaster") TestMaster testMaster) throws Exception{
-		
-		ModelAndView mv = null;
-		
-		testService.createTest(testMaster);
-		List<QuestionMaster> list = new ArrayList<QuestionMaster>();
-		int subjectId = testMaster.getSubjectMaster().getSubjectId();
-		int totalQuestions = testMaster.getTotalNoOfQuestion();
-
-		List<DifficultyLevelMaster> difficultyLevelMaster = difficultyLevelService.getAllLevel();
-		
-		for (DifficultyLevelMaster level : difficultyLevelMaster) {
-
-			int percentage = this.percentage(totalQuestions, level.getPercentage());
-			int count=topicRepository.countTopic(subjectId);
-			
-			List<QuestionMaster> list1 = questionRepository.findRandQuestions(subjectId, 3, percentage);
-		
-			list.addAll(list1);
-			Collections.shuffle(list);
-			int index=0;
-			m.addAttribute("list", list);
-			m.addAttribute("index", index);
-
-			mv = new ModelAndView("testGenrate");
-		}
-		return mv;
-	}	
-	
-	@RequestMapping(value="/createTest1")
-	public ModelAndView createTest1(@RequestParam(name="hiddenData") String hiddenData,ModelAndView mv,Model m) throws Exception {
-		
-		System.out.println("hiddenData"+hiddenData);
-		final ObjectMapper objectMapper = new ObjectMapper();
-
-		TestMaster[] testList = objectMapper.readValue(hiddenData, TestMaster[].class);
-		
-		List<TestMaster> testList1 = new ArrayList(Arrays.asList(testList));
-		
-		int sum1=0;
-		int sum=0;
-	    List<QuestionMaster> list = new ArrayList<QuestionMaster>();
-	    for (TestMaster testMaster: testList1) {
-			
-	    	testService.createTest(testMaster);
-			int subjectId = testMaster.getSubjectMaster().getSubjectId();
-			int topicId = testMaster.getTopicMaster().getTopicId();
-			int hardQuestions = testMaster.getTotalNoOfHardQuestion();
-			int	lowQuestions = testMaster.getTotalNoOfLowQuestion();
-			int mediumQuestions = testMaster.getTotalNoOfMediumQuestion();
-			
-			sum1=hardQuestions+lowQuestions+mediumQuestions;
-			sum=sum+sum1;
-	        
-	        List<QuestionMaster> list1 = questionRepository.findRandHardQuestions(subjectId,topicId,3,hardQuestions);
-			List<QuestionMaster> list2 = questionRepository.findRandLowQuestions(subjectId, topicId, 1, lowQuestions);
-			List<QuestionMaster> list3 = questionRepository.findRandMediumQuestions(subjectId, topicId, 2, mediumQuestions);
-				
-			list.addAll(list1);
-			list.addAll(list2);
-			list.addAll(list3);
-
-			m.addAttribute("duration", testMaster.getDuration());	
-	    }
-
-	    Collections.shuffle(list);
-		int index=0;
-		m.addAttribute("list", list);
-		m.addAttribute("index", index);
-		mv = new ModelAndView("testGenrate");
-		return mv;
-	}
-
 	@GetMapping("/getAllTest")
 	public List<TestMaster> getAllTest() {
 		List<TestMaster> testMaster = testService.getAllTest();
@@ -177,5 +103,76 @@ public class TestController  {
 		List<SubjectMaster> subject = subjectService.getAllSubject();
 		model.addAttribute("subject", subject);
 		return mv;
-	}	
+	}
+	
+//	@RequestMapping(value = "/createTest")
+//	public ModelAndView createTest( Model m, @ModelAttribute("testMaster") TestMaster testMaster) throws Exception{
+//		
+//		ModelAndView mv = null;
+//		
+//		testService.createTest(testMaster);
+//		List<QuestionMaster> list = new ArrayList<QuestionMaster>();
+//		int subjectId = testMaster.getSubjectMaster().getSubjectId();
+//		int totalQuestions = testMaster.getTotalNoOfQuestion();
+//
+//		List<DifficultyLevelMaster> difficultyLevelMaster = difficultyLevelService.getAllLevel();
+//		
+//		for (DifficultyLevelMaster level : difficultyLevelMaster) {
+//			
+//			List<QuestionMaster> list1 = questionRepository.findRandQuestions(subjectId, 3, totalQuestions);
+//		
+//			list.addAll(list1);
+//			Collections.shuffle(list);
+//			int index=0;
+//			m.addAttribute("list", list);
+//			m.addAttribute("index", index);
+//
+//			mv = new ModelAndView("testGenrate");
+//		}
+//		return mv;
+//	}	
+//	
+//	@RequestMapping(value="/createTest1")
+//	public ModelAndView createTest1(@RequestParam(name="hiddenData") String hiddenData,ModelAndView mv,Model m) throws Exception {
+//		
+//		System.out.println("hiddenData"+hiddenData);
+//		final ObjectMapper objectMapper = new ObjectMapper();
+//
+//		TestMaster[] testList = objectMapper.readValue(hiddenData, TestMaster[].class);
+//		
+//		List<TestMaster> testList1 = new ArrayList<TestMaster>(Arrays.asList(testList));
+//		
+//		int sum1=0;
+//		int sum=0;
+//	    List<QuestionMaster> list = new ArrayList<QuestionMaster>();
+//	    for (TestMaster testMaster: testList1) {
+//			
+//	    	testService.createTest(testMaster);
+//			int subjectId = testMaster.getSubjectMaster().getSubjectId();
+//			int topicId = testMaster.getTopicMaster().getTopicId();
+//			int hardQuestions = testMaster.getTotalNoOfHardQuestion();
+//			int	lowQuestions = testMaster.getTotalNoOfLowQuestion();
+//			int mediumQuestions = testMaster.getTotalNoOfMediumQuestion();
+//			
+//			sum1=hardQuestions+lowQuestions+mediumQuestions;
+//			sum=sum+sum1;
+//	        
+//	        List<QuestionMaster> list1 = questionRepository.findRandHardQuestions(subjectId,topicId,3,hardQuestions);
+//			List<QuestionMaster> list2 = questionRepository.findRandLowQuestions(subjectId, topicId, 1, lowQuestions);
+//			List<QuestionMaster> list3 = questionRepository.findRandMediumQuestions(subjectId, topicId, 2, mediumQuestions);
+//				
+//			list.addAll(list1);
+//			list.addAll(list2);
+//			list.addAll(list3);
+//
+//			m.addAttribute("duration", testMaster.getDuration());	
+//	    }
+//
+//	    Collections.shuffle(list);
+//		int index=0;
+//		m.addAttribute("list", list);
+//		m.addAttribute("index", index);
+//		mv = new ModelAndView("testGenrate");
+//		return mv;
+//	}
 }

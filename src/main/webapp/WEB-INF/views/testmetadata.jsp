@@ -5,7 +5,7 @@
 <jsp:include page="head.jsp" />
 <script type="text/javascript">
 	function show_alert() {
-		alert("Subject Added Successfully..!");
+		alert("Test Paper deleted Successfully..!");
 	}
 </script>
 <script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
@@ -15,7 +15,7 @@
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
 			<!-- sidebar -->
-			<jsp:include page="sidebar.jsp" />
+			<jsp:include page="sidebarUser.jsp" />
 			<div class="layout-page">
 				<!-- navbar  -->
 				<jsp:include page="header.jsp" />
@@ -26,7 +26,6 @@
 						<h4 class="fw-bold py-3 mb-4">
 							<span class="text-muted fw-light">Tables / </span>Test Papers
 						</h4>
-
 						<!-- Start Test Papers Table Design -->
 						<div class="card">
 							<h5 class="card-header">Test Papers</h5>
@@ -65,11 +64,6 @@
 														<i class="material-icons front">delete</i>
 													</button>
 													</a>&nbsp;&nbsp;&nbsp; 
-													<a href="/viewPDF/${testList.getTestMetaDataId()}">
-													<button class="table-actbtn pushable">
-														<i class="material-icons front">visibility</i>
-													</button>
-													</a>
 												</td>
 											</tr>
 										</c:forEach>
@@ -83,7 +77,6 @@
 			</div>
 		</div>
 		<div class="layout-overlay layout-menu-toggle"></div>
-	</div>
 	</div>
 </body>
 </html>

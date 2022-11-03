@@ -66,8 +66,8 @@ public class QuestionServiceImpl implements QuestionService{
 	@Override
 	public int findQuestionByName(String question) {
 		
-		questionRepository.findQuestionByName(question);
-		return 0;
+		int count = questionRepository.findQuestionByName(question);
+		return count;
 	}
 	
 	@Override

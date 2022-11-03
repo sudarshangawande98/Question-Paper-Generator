@@ -24,39 +24,25 @@
 		<!-- Components -->
 		<li class="menu-header small text-uppercase"><span class="menu-header-text"><b>&nbsp;&nbsp;Components</b></span></li>
 
+		<li class="menu-item"><a href=/UserRegister class="menu-link">
+			<i class="menu-icon tf-icons bx bxs-spreadsheet" style="font-size: 25px; color: blue;"></i>
+			<div data-i18n="Basic">
+				<b>Add Faculty</b>
+			</div></a>
+		</li>
+		
+		<li class="menu-item"><a href=/manageUser class="menu-link">
+			<i class="menu-icon tf-icons bx bxs-info-square" style="font-size: 25px; color: blue;"></i>
+			<div data-i18n="Basic">
+				<b> Faculty Info</b>
+			</div></a>
+		</li>
+
 		<!-- Cards -->
 		<li class="menu-item"><a href="/subjectTable" class="menu-link">
 			<i class="menu-icon tf-icons bx bxs-book-open" style="font-size: 25px; color: blue;"></i>
 			<div data-i18n="Basic">
 				<b>Subject</b>
-			</div></a>
-		</li>
-
-		<li class="menu-item"><a href="TopicTable" class="menu-link">
-			<i class="menu-icon tf-icons bx bxs-spreadsheet" style="font-size: 25px; color: blue;"></i>
-			<div data-i18n="Basic">
-				<b>Topic</b>
-			</div></a>
-		</li>
-
-		<li class="menu-item"><a href="questionTable" class="menu-link">
-			<i class="menu-icon tf-icons bx bx-task" style="font-size: 25px; color: blue;"></i>
-			<div data-i18n="Basic">
-				<b>Questions</b>
-			</div></a>
-		</li>
-
-		<li class="menu-item"><a href="/generate_question1" class="menu-link"> <i class="menu-icon tf-icons bx bxs-pencil"
-			style="font-size: 25px; color: blue;"></i>
-			<div data-i18n="Basic">
-				<b>Test</b>
-			</div></a>
-		</li>
-
-		<li class="menu-item"><a href="/testmetadata" class="menu-link">
-			<i class="menu-icon tf-icons bx bxs-notepad" style="font-size: 25px; color: blue;"></i>
-			<div data-i18n="Basic">
-				<b>Test Papers</b>
 			</div></a>
 		</li>
 

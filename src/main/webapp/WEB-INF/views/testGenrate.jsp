@@ -76,79 +76,80 @@ table {
 <body>
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
-			<jsp:include page="sidebar.jsp" />
+			<jsp:include page="sidebarUser.jsp" />
 			<div class="layout-page">
 				<jsp:include page="header.jsp" />
-				<body>
-					<form action="/testmetadata">
-						<div class="container d-flex justify-content-center mt-50 mb-50">
-							<div class="row">
-								<div class="col-md-12 text-right mb-3"></div>
-								<div class="col-md-12">
-									<div class="card"><br>
-										<img src="../assets/img/favicon/logo.jpg "
-											style="width: 40%; height: 40%" class="center">
-										<h6 class="card-title text-black">
-											<br><b>Preparation Test</b>
-										</h6>
-										<h6 class="card-title text-black">
-											<b>MCQ Test</b>
-										</h6>
-										<div class="card-body">
-											<div class="row">
-												<div class="col-sm-6">
-													<div class="mb-4 pull-left">
-														<ul class="list list-unstyled mb-0 text-left"> <br>
-															<li><h5>Duration : ${duration} Hours.</h5></li>
-														</ul>
-													</div>
+				<form action="/testmetadata">
+					<div class="container d-flex justify-content-center mt-50 mb-50">
+						<div class="row">
+							<div class="col-md-12 text-right mb-3"></div>
+							<div class="col-md-12">
+								<div class="card">
+									<br> <img src="../assets/img/favicon/logo.jpg "
+										style="width: 40%; height: 40%" class="center">
+									<h6 class="card-title text-black">
+										<br>
+										<b>Preparation Test</b>
+									</h6>
+									<h6 class="card-title text-black">
+										<b>MCQ Test</b>
+									</h6>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="mb-4 pull-left">
+													<ul class="list list-unstyled mb-0 text-left"> <br>
+														<li><h5>Duration : ${duration} Hours.</h5></li>
+													</ul>
 												</div>
-												<div class="col-sm-6">
-													<div class="mb-4 ">
-														<div class="text-sm-right"> <br>
-															<c:set var="markTotal" value="${0}" />
-															<c:forEach var="list" items="${list}">
-																<c:set var="markTotal" value="${markTotal + list.marks}" />
-															</c:forEach>
-															<h5>Total marks : ${markTotal}</h5>
-														</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="mb-4 ">
+													<div class="text-sm-right"> <br>
+														<c:set var="markTotal" value="${0}" />
+														<c:forEach var="list" items="${list}">
+															<c:set var="markTotal" value="${markTotal + list.marks}" />
+														</c:forEach>
+														<h5>Total marks : ${markTotal}</h5>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div class="table-responsive">
-											<table class="table table-lg">
-												<tbody>
-													<c:forEach items="${list}" var="list">
-														<tr>
-															<td class="count">) ${list.question}
-																<ul class="list list-unstyled mb-0 text-left"> <br>
-																	<li>A) ${list.option1}</li>
-																	<li>B) ${list.option2}</li>
-																	<li>C) ${list.option3}</li>
-																	<li>D) ${list.option4}</li>
-																</ul>
-															</td>
-															<td></td>
-															<td></td>
-															<td><span class="font-weight-semibold"
-																value="${list.marks}">${list.marks}</span></td>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</table>
-										</div>
+									</div>
+									<div class="table-responsive">
+										<table class="table table-lg">
+											<tbody>
+												<c:forEach items="${list}" var="list">
+													<tr>
+														<td class="count">) ${list.question}
+															<ul class="list list-unstyled mb-0 text-left"> <br>
+																<li>A) ${list.option1}</li>
+																<li>B) ${list.option2}</li>
+																<li>C) ${list.option3}</li>
+																<li>D) ${list.option4}</li>
+															</ul>
+														</td>
+														<td></td>
+														<td></td>
+														<td><span class="font-weight-semibold"
+															value="${list.marks}">${list.marks}</span>
+														</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
 									</div>
 								</div>
-								<br><br><br>
-								<div class="a">
-									<button class="btn btn-primary" style="text-align: center;">download pdf</button>
-								</div>
-								<div class="layout-overlay layout-menu-toggle"></div>
+							</div> <br> <br> <br>
+							<div class="a">
+								<button class="btn btn-primary" style="text-align: center;">download pdf</button>
 							</div>
-					</form>
-				</body>
+							<div class="layout-overlay layout-menu-toggle"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
-
-
-

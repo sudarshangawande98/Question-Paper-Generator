@@ -9,6 +9,8 @@
 <jsp:include page="head.jsp" />
 <script type="text/javascript" src="webjars/jquery/2.2.3/jquery.min.js"></script>
 <script src="../assets/js/app.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 #error {
 	color: red;
@@ -34,7 +36,7 @@ $(document).ready(function(){
 				for(var i = 0; i < result.length; i++) {
 					s += '<tr  onchange="validateForm()" ><td><div class="form-check mt-3" ><input value="' + result[i].topicId + 
 					'" type="checkbox"> <label class="form-check-label" for="defaultCheck1"> '+ result[i].topicName+ 
-					'</label></div></td><td><input type="text" class="form-control" id="' + "hard" + result[i].topicId + '" placeholder="Enter No of Hard Question" " name="hard1" /></td><td><input type="text" class="form-control" id="' + "medium" + result[i].topicId + '" placeholder="Enter No of Medium Question" /></td><td><input type="text" class="form-control" id="' + "low" + result[i].topicId + '" placeholder="Enter No of Low Question" /></td>';
+					'</label></div></td><td><input type="number" class="form-control" id="' + "hard" + result[i].topicId + '" placeholder="Enter No of Hard Question" " name="hard1" required/></td><td><input type="number" class="form-control" id="' + "medium" + result[i].topicId + '" placeholder="Enter No of Medium Question" required/></td><td><input type="number" class="form-control" id="' + "low" + result[i].topicId + '" placeholder="Enter No of Low Question" required/></td>';
 	                    s+='</tr>';                          
 	    				console.log(result[i].topicId);
 				}
@@ -64,7 +66,6 @@ $(document).ready(function(){
             	var d=document.getElementById("duration").value;
             	var t=document.getElementById("testDate").value;
             	var h=document.getElementById("hard"+chks[i].value).value;
-            	 
                 var m=document.getElementById("medium"+chks[i].value).value;
                 var l=document.getElementById("low"+chks[i].value).value;
                 totalnoquestion
@@ -109,7 +110,7 @@ $(document).ready(function(){
             else{
          		error.textContent = "";
          		chks[i].disabled=false;
-         	  }
+         	}
     	}  
     }
 
@@ -136,7 +137,7 @@ $(document).ready(function(){
 <body>
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
-			<jsp:include page="sidebar.jsp" />
+			<jsp:include page="sidebarUser.jsp" />
 			<div class="layout-page">
 				<jsp:include page="header.jsp" />
 				<div class="content-wrapper">
@@ -152,43 +153,40 @@ $(document).ready(function(){
 											<div class="card">
 												<h5 class="card-header">Bordered Table</h5>
 												<div class="card-body">
-													<form action="/pdf" method="post"
-														onsubmit="return GetSelected()" name="myForm">
+													<form action="/pdf" method="post" onsubmit="return GetSelected()" name="myForm">
 														<div class="table-responsive text-nowrap">
 															<table class="table table-bordered">
 																<tr>
 																	<th>Subject</th>
 																	<td>
 																		<div class="mb-3">
-																			<input type="hidden" name="hiddenData" id="hidden_id">
-																			<br> <select class="select1 form-select"
-																				onchange="selectedSubjectName()" id="subjectbox">
-																				<option value="open this select menu...">Select
+																			<input type="hidden" name="hiddenData" id="hidden_id" required> <br> 
+																			<select class="select1 form-select"
+																				onchange="selectedSubjectName()" id="subjectbox" required>
+																				<option value="" >Select
 																					Subject</option>
-																				<c:forEach items="${subject}" var="subject">
-																					<option value="${subject.subjectId}" id="abc">${subject.subjectName}
-																					</option>
-																				</c:forEach>
+																				<c:forEach items="${subject}" var="subject" >
+																					<option value="${subject.subjectId}" id="abc">${subject.subjectName} 
+																					</option> 
+																				</c:forEach >
 																			</select>
 																		</div>
 																	</td>
 																	<th>Total Questions</th>
-																	<td><input type="text" class="form-control"
-																		id="totalnoquestion" size="5" pattern="[0-9]+"
+																	<td><input type="number" class="form-control"
+																		id="totalnoquestion" pattern="[0-9]{1,3}" maxlength=3;
 																		title="please enter number only" required="required" /></td>
 																	<th>Duration</th>
-																	<td><input type="text" class="form-control"
-																		id="duration" pattern="[0-9]+" size="5"
+																	<td><input type="number" class="form-control"
+																		id="duration"  step=".01"
 																		title="please enter number only" required="required" /></td>
 																	<th>Conducted Date</th>
 																	<td><input type="date" class="form-control"
-																		id="testDate" pattern="[0-9]+"
+																		id="testDate" pattern="[0-9]+" min="2022-10-01"
 																		title="please enter number only" required="required" /></td>
 																</tr>
 															</table>
-														</div>
-														<br>
-														<br>
+														</div> <br> <br>
 														<div class="table-responsive text-nowrap">
 															<div class="desk">
 																<span id="error" style="text-align: center;"></span>
@@ -202,21 +200,22 @@ $(document).ready(function(){
 																		<th>Low Level Question</th>
 																	</tr>
 																</thead>
-																<tbody id="check">
+																<tbody id="check" >
 																	<tr>
-																		<td><div class="form-check mt-3">
+																		<td>
+																			<div class="form-check mt-3">
 																				<input class="form-check-input" type="checkbox"
-																					value="" id="defaultCheck1"> <label
-																					class="form-check-label" for="defaultCheck1">Select
-																					Topics </label>
-																			</div></td>
-																		<td><input type="text" class="form-control"
-																			id="hard" placeholder="Enter No of Hard Question" />
+																					value="0" id="defaultCheck1" required> <label
+																					class="form-check-label" for="defaultCheck1">Select Topics </label>
+																			</div>
 																		</td>
-																		<td><input type="text" class="form-control"
-																			id="medium" placeholder="Enter No of Medium Question" /></td>
-																		<td><input type="text" class="form-control"
-																			id="low" placeholder="Enter No of Low Question" />
+																		<td><input type="number" class="form-control" pattern="[0-9]" maxlength=3;
+																			id="hard" placeholder="Enter No of Hard Question"  required/>
+																		</td>
+																		<td><input type="number" class="form-control" pattern="[0-9]" maxlength=3;
+																			id="medium" placeholder="Enter No of Medium Question" required/></td>
+																		<td><input type="number" class="form-control" pattern="[0-9]" maxlength=3;
+																			id="low" placeholder="Enter No of Low Question" required/>
 																		</td>
 																	</tr>
 																</tbody>

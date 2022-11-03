@@ -99,7 +99,7 @@
 								</div>
 								<div class="flex-grow-1">
 									<span id="userName" class="fw-semibold d-block">${userName}</span>
-									<small class="text-muted">Admin</small>
+									<small class="text-muted">Account</small>
 								</div>
 							</div></a>
 						</li>

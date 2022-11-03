@@ -47,14 +47,30 @@ public class ForgotController {
 		return mv;
 	}
 
+	//Send userName and Password to faculty
+	@PostMapping("/sendMail")
+	public ModelAndView sendMail(@RequestParam("email") String email, @RequestParam("userName") String userName, @RequestParam("password") String password, ModelAndView mv) {
+		
+		String subject = "Congratulations.. Your successfully Added as a faculty --> From Qbank Group-14 CDAC Mumbai(Kharghar + Juhu) ";
+		String message = "" + "<div style='border:1px solid #e2e2e2;padding:20px'>" + "<h1>" + "Your User Name is :" + "<b>" + userName
+				+ "</b>" + "</h1>" + "</div>" + "" + "<div style='border:1px solid #e2e2e2;padding:20px'>" + "<h1>" + "Password is :" + "<b>" + password
+				+ "</b>" + "</h1>" + "</div>";
+		String to = email;
+
+		this.emailService.sendEmail(subject, message, to);
+		mv = new ModelAndView("redirect:manageUser");
+		return mv;
+	}
+	
 	@PostMapping("/send-otp")
 	public ModelAndView sendOTP(@RequestParam("email") String email, HttpSession sessionOTP, ModelAndView mv, Model m) {
 
 		// genrating otp of 4 digit
+		Random random = new Random();
 		int otp = random.nextInt(999999);
 		
 		// write code for send otp to email
-		String subject = "OTP From Bhonsala Military School , Nashik  ";
+		String subject = "OTP From Qbank Group-14 CDAC Mumbai(Kharghar + Juhu) ";
 		String message = "" + "<div style='border:1px solid #e2e2e2;padding:20px'>" + "<h1>" + "OTP is :" + "<b>" + otp
 				+ "</b>" + "</h1>" + "</div>";
 		String to = email;
@@ -84,7 +100,6 @@ public class ForgotController {
 	// verify otp
 	@PostMapping("/verify-otp")
 	public ModelAndView verifyOtp(@RequestParam("otp") int otp, HttpSession sessionOTP, ModelAndView mv, Model m) {
-
 		int myOtp = (Integer) sessionOTP.getAttribute("myotp");
 		String email = (String) sessionOTP.getAttribute("email");
 		if (myOtp == otp) {
@@ -102,7 +117,6 @@ public class ForgotController {
 			mv = new ModelAndView("ChangePassword");
 			return mv;
 		} else {
-
 			m.addAttribute("message1", "YOU Have Enter Wrong otp");
 			mv = new ModelAndView("VerifyOtp");
 			return mv;
@@ -117,7 +131,7 @@ public class ForgotController {
 		UserMaster user = this.userRepo.getUserByUserEmail(email);
 		user.setPassword(newpassword);
 		this.userRepo.save(user);
-		m.addAttribute("message", "Change password succesfully..!!");
+		m.addAttribute("message", "   \n Change password succesfully..!!");
 		mv = new ModelAndView("login");
 		return mv;
 	}

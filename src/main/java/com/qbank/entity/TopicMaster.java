@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="TopicMaster")
 public class TopicMaster {
@@ -81,15 +82,12 @@ public class TopicMaster {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-
 	
 	@Override
 	public String toString() {
 		return "TopicMaster [topicId=" + topicId + ", topicName=" + topicName + ", createdDate=" + createdDate
 				+ ", modifyDate=" + modifyDate + ", subjectMaster=" + subjectMaster + "]";
 	}
-
-	
 
 	public TopicMaster(String topicName, Date createdDate, Date modifyDate, SubjectMaster subjectMaster) {
 		super();
@@ -101,9 +99,5 @@ public class TopicMaster {
 
 	public TopicMaster() {
 		super();
-		
 	}
-	
-	
-
 }

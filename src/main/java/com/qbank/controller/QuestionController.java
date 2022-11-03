@@ -115,18 +115,23 @@ public class QuestionController {
 	
 	@RequestMapping(value = "/saveQuestion")
 	public ModelAndView saveQuestion(ModelAndView mv,Model m, @ModelAttribute("questionMaster") QuestionMaster questionMaster,@ModelAttribute("SubjectMaster") SubjectMaster subjectMaster) throws Exception {
-		String msg;
+		String wrongmessage="";
 		int result=questionService.findQuestionByName(questionMaster.getQuestion());
+		System.out.println(result);
 		if(result>0) {
-			msg="Qusetion AlReady Exits";
+			wrongmessage="Question AllReady Exits....!";
 		}else {
-			questionService.createQuestion(questionMaster);
-			msg="Qusetion Added SucessFully";
+			try{
+				questionService.createQuestion(questionMaster);
+				wrongmessage="Question Added SucessFully....!";
+			}catch(Exception e) {
+				mv = new ModelAndView("redirect:questionTable");
+			}
 		}
 		
-		m.addAttribute("msg",msg);
+		m.addAttribute("wrongmessage",wrongmessage);
 		manageQuestion(mv, m);
-		mv = new ModelAndView("redirect:questionTable");
+		mv = new ModelAndView("questionTable");
 		
 		return mv;
 	}

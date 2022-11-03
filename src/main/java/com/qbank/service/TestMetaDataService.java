@@ -3,13 +3,11 @@ package com.qbank.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.qbank.entity.TestMetaData;
 
 public interface TestMetaDataService {
 	
-	public boolean uploadFile(MultipartFile file);
+	//public boolean uploadFile(MultipartFile file);
 	
 	public Optional<TestMetaData> getTestMetaData(Integer testMetaDataId);
 	

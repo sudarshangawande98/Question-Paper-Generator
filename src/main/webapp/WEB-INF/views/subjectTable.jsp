@@ -7,7 +7,15 @@
 
 <script type="text/javascript">
 	function show_alert() {
-		alert("Subject Added Successfully..!");
+
+		const subjectName = document.getElementById('basic-icon-default-fullname').value;
+		const subjectDescription = document.getElementById('exampleFormControlTextarea1').value;
+
+		if (subjectName == "" && subjectDescription == "") {
+			alert("Please fill the required");
+		} else if (subjectName != "" && subjectDescription != "") {
+			alert("Subject added sucessfully!");
+		}
 	}
 </script>
 
@@ -38,15 +46,9 @@
 <body>
 	<!-- Layout wrapper -->
 	<div class="layout-wrapper layout-content-navbar">
-		<div class="layout-container">
-			
-			<!-- sidebar-->
+		<div class="layout-container">			
 			<jsp:include page="sidebar.jsp" />
-
-			<!-- Layout container -->
-			<div class="layout-page">
-			
-				<!-- navbar -->
+			<div class="layout-page">			
 				<jsp:include page="header.jsp" />
 	
 				<!-- Hoverable Table rows -->
@@ -57,7 +59,6 @@
 							<span class="text-muted fw-light">Tables /</span> Subject Table
 						</h4>
 						<!-- Add Subject Form -->
-						<!-- Button trigger modal -->
 						<form action="saveSubject" method="post">
 							<div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
 								<div class="modal-dialog" role="document">
@@ -75,7 +76,7 @@
 													<div class="input-group input-group-merge">
 														<span id="basic-icon-default-fullname2"
 															class="input-group-text"><i class="bx bxs-book"></i></span>
-														<input type="text" name="subjectName" class="form-control"
+														<input type="text" name="subjectName" class="form-control" required
 															id="basic-icon-default-fullname"
 															placeholder="Enter Subject Name"
 															aria-label="Enter Subject Name"
@@ -86,7 +87,7 @@
 											<div class="row">
 												<div class="col mb-3">
 													<label for="exampleFormControlTextarea1" class="form-label">Description</label>
-													<textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"> </textarea>
+													<textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" required></textarea>
 												</div>
 											</div>
 										</div>
@@ -94,15 +95,12 @@
 											<button type="button" class="btn btn-outline-secondary"
 												data-bs-dismiss="modal">Close
 											</button>
-											<button type="submit" class="btn btn-primary"
-												onclick="show_alert()">Save changes
-											</button>
+											<button type="submit" class="btn btn-primary" onclick="show_alert()">Save changes </button>
 										</div>
 									</div>
 								</div>
 							</div>
 							<!-- End Subject Form -->
-
 							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"
 								style="float: right;">
 								<i class='bx bx-plus'></i></span>&nbsp; Add
@@ -171,12 +169,11 @@
 							<h5 class="modal-title" id="exampleModalLabel1">Update Subject</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-
 						<div class="modal-body">
 							<div class="row">
 								<div class="col mb-3">
-									<label for="subjectId" class="form-label">Subject Id</label> 
-									<input type="text" id="subjectId" name="subjectId" class="form-control" placeholder="Enter Name" />
+									<input type="hidden" id="subjectId" name="subjectId"
+										class="form-control" placeholder="Enter Name" />
 								</div>
 							</div>
 							<div class="row">

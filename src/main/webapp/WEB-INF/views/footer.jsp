@@ -8,7 +8,7 @@
 <body>
 	<footer class="content-footer footer bg-footer-theme">
 		<div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-			<div class="mb-2 mb-md-0">Copyright @ 2022 CDAC Mumbai (Kharghar + Juhu) Team:14 All rights reserved.</div>
+			<div class="mb-2 mb-md-0">Copyright:- Team:14 CDAC Mumbai (Kharghar + Juhu) @ 2022 All rights reserved.</div>
 		</div>
 	</footer>
 

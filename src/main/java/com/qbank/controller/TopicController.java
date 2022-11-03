@@ -28,7 +28,7 @@ import com.qbank.serviceimpl.TopicServiceImpl;
 
 @RestController
 public class TopicController {
-	
+		
 	@Autowired
 	TopicServiceImpl topicService;
 	
@@ -56,7 +56,6 @@ public class TopicController {
 	
 	@PostMapping("/save1")
 	public ModelAndView save(TopicMaster t,ModelAndView mv,Model m) {
-
 		topicRepository.save(t);
 		manageTopic(mv, m);
 		mv = new ModelAndView("redirect:TopicTable");
@@ -64,29 +63,32 @@ public class TopicController {
 	}
 
 	@RequestMapping(value = "/addTopicForm")
-	public ModelAndView showAddTopic(ModelAndView mv, Model m) {
+	public ModelAndView showAddTopic(ModelAndView mv, Model m) {	
 		List<SubjectMaster> subject =subjectService.getAllSubject();
 		System.out.println(subject);
-		//m.addAttribute("subjectId",subject.getSubjectId());
-
 		m.addAttribute("subject", subject);
 		return mv;
 	}
 	
 	@RequestMapping(value = "/saveTopic")
 	public ModelAndView saveTopic(ModelAndView mv,Model m, @ModelAttribute("topicMaster") TopicMaster topicMaster,@ModelAttribute("SubjectMaster") SubjectMaster subjectMaster) throws Exception {
-		String msg;
+		String wrongmessage="";
 		int result=topicService.findTopicByName(topicMaster.getTopicName());
 		if(result>0) {
-			msg="Topic AlReady Exits";
+			wrongmessage="Topic AlReady Exits";
 		}else {
-			topicService.createTopic(topicMaster);
-			System.out.println(topicMaster);
-			msg="Topic Added SucessFully";
+			try {
+				topicService.createTopic(topicMaster);
+				System.out.println(topicMaster);
+				wrongmessage="Topic Added SucessFully";
+			}catch(Exception e) {
+				mv = new ModelAndView("TopicTable");
+			}
 		}
-		m.addAttribute("msg",msg);
+		m.addAttribute("msg",wrongmessage);
+		System.out.println(wrongmessage);
 		manageTopic(mv, m);
-		mv = new ModelAndView("redirect:TopicTable");
+		mv = new ModelAndView("TopicTable");
 		return mv;
 	}
 	
@@ -97,7 +99,7 @@ public class TopicController {
 		topicMaster.setModifyDate(new Date());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/deleteTopic/{topicId}")
 	public ModelAndView deleteTopic(@PathVariable(value = "topicId") Integer topicId,Model m,ModelAndView mv) {
 		topicService.deleteTopic(topicId);
@@ -109,10 +111,10 @@ public class TopicController {
 	@GetMapping("/findOne1/{topicId}")
 	@ResponseBody
 	public Optional<TopicMaster> findOne(@PathVariable("topicId") Integer topicId,Model model) {
-		
 		List<SubjectMaster> subject = subjectService.getAllSubject();
 		model.addAttribute("subject", subject);
 		System.out.println(topicId);
 		return topicRepository.findById(topicId);
+		
 	}
 }

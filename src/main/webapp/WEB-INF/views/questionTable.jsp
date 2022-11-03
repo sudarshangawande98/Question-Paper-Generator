@@ -100,19 +100,6 @@ body {
 			jQuery(this).toggleClass('inactive active');
 		});
 	});
-
-	$(document).ready(function() {
-		$('#subjectbox').on('change', function() {
-			var subjectName = $('.select1 option:selected').text();
-			console.log(subjectName);
-
-			if (subjectName.match('Mathematics')) {
-				document.getElementById("h").value = 2;
-			} else
-				document.getElementById("h").value = 4;
-
-		});
-	});
 </script>
 
 
@@ -148,7 +135,7 @@ body {
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
 			<!-- sidebar-->
-			<jsp:include page="sidebar.jsp" />
+			<jsp:include page="sidebarUser.jsp" />
 
 			<!-- Layout container -->
 			<div class="layout-page">
@@ -162,9 +149,18 @@ body {
 						<h4 class="fw-bold py-3 mb-4">
 							<span class="text-muted fw-light">Tables /</span> Question Table
 						</h4>
-						
+						<p style="position: absolute !important; margin-top: -40px;">
+							<c:set var="wrongmessage" scope="page" value="${wrongmessage}" />
+							<c:if test="${not empty wrongmessage}">
+								<div class="alert" role="alert"
+									style="position: absolute !important; font-size: x-large; color: red; margin-top: -85px; margin-left: 269px;">
+									<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+										${wrongmessage}</b>
+								</div>
+							</c:if>
+						</p>
 						<!-- Add Question Form -->
-						<form action="saveQuestion" method="post">
+						<form action="saveQuestion" method="post" >
 							<div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
@@ -175,6 +171,49 @@ body {
 											</button>
 										</div>
 										<div class="modal-body">
+											<div class="row">
+												<div class="col mb-0">
+													<label class="form-label" for="basic-icon-default-fullname">
+														Select Subject Name 
+													</label>
+													<div class="input-group input-group-merge">
+														<select name="subjectMaster" class="select1 form-select" id="subjectbox" required>
+															<option value="">Select Subject</option>
+															<c:forEach items="${subject}" var="subject">
+																<option value="${subject.subjectId}" id="abc">${subject.subjectName} </option>
+															</c:forEach>
+															<% String s = request.getParameter("subjectMaster"); out.println(s); %>
+														</select>
+													</div>
+												</div>
+												<div class="col mb-0">
+													<label class="form-label" for="basic-icon-default-fullname">
+														Enter Topic 
+													</label>
+													<div class="input-group input-group-merge">
+														<select id="comboboxTopic" name="topicMaster" class="select2 form-select" required></select>
+													</div>
+												</div>
+											</div>
+											<br>
+											<div class="row">
+												<div class="mb-3">
+													<label class="form-label" for="country">
+														Difficulty Level Name
+													</label> 
+													<select name="difficultyLevelMaster" class="select2 form-select" required>
+														<option value="">
+															Select Level
+														</option>
+														<c:forEach items="${difficultyLevelMaster}"
+															var="difficultyLevelMaster">
+															<option value="${difficultyLevelMaster.levelId}"
+																>${difficultyLevelMaster.levelName}
+															</option>
+														</c:forEach>
+													</select>
+												</div>
+											</div>
 											<div class="mb-3">
 												<label class="form-label" for="basic-icon-default-fullname">
 													Question Name 
@@ -185,7 +224,7 @@ body {
 													</span> 
 													<input type="text" name="question" class="form-control" id="basic-icon-default-fullname"
 														placeholder="Enter Question " aria-label="Enter Subject Name"
-														aria-describedby="basic-icon-default-fullname2">
+														aria-describedby="basic-icon-default-fullname2" required>
 												</div>
 											</div>
 											<div class="row">
@@ -200,7 +239,7 @@ body {
 														<input type="text" name="option1" class="form-control"
 															id="basic-icon-default-fullname" placeholder="Enter  Option  1 "
 															aria-label="Enter Subject Name"
-															aria-describedby="basic-icon-default-fullname2">
+															aria-describedby="basic-icon-default-fullname2" required>
 													</div>
 												</div>
 												<div class="col mb-0">
@@ -213,7 +252,7 @@ body {
 														</span> <input type="text" name="option2" class="form-control"
 															id="basic-icon-default-fullname" placeholder="Enter  Option  2 "
 															aria-label="Enter Subject Name"
-															aria-describedby="basic-icon-default-fullname2">
+															aria-describedby="basic-icon-default-fullname2" required>
 													</div>
 												</div>
 											</div>
@@ -229,7 +268,7 @@ body {
 														</span> 
 														<input type="text" name="option3" class="form-control"
 															id="basic-icon-default-fullname" placeholder="Enter  Option  3 "
-															aria-label="Enter Subject Name" aria-describedby="basic-icon-default-fullname2">
+															aria-label="Enter Subject Name" aria-describedby="basic-icon-default-fullname2" required>
 													</div>
 												</div>
 												<div class="col mb-0">
@@ -242,7 +281,7 @@ body {
 														</span> <input type="text" name="option4" class="form-control"
 															id="basic-icon-default-fullname" placeholder="Enter  Option  4 "
 															aria-label="Enter Subject Name"
-															aria-describedby="basic-icon-default-fullname2">
+															aria-describedby="basic-icon-default-fullname2" required> 
 													</div>
 												</div>
 											</div>
@@ -259,7 +298,7 @@ body {
 														<input type="text" name="correctAnswer" class="form-control"
 															id="basic-icon-default-fullname" placeholder="Enter Correct Option "
 															aria-label="Enter Subject Name"
-															aria-describedby="basic-icon-default-fullname2">
+															aria-describedby="basic-icon-default-fullname2" required>
 													</div>
 												</div>
 												<div class="col mb-0">
@@ -269,55 +308,10 @@ body {
 														<span id="basic-icon-default-fullname2" class="input-group-text"><i
 															class="fa fa-check-circle-o"></i>
 														</span> 
-														<input type="text" name="marks" class="form-control" id="h"
+														<input type="number" name="marks" class="form-control" id="h" pattern="[0-9]{1,3}" maxlength=2;
 															placeholder="Enter Marks " aria-label="Enter Subject Name"
-															aria-describedby="basic-icon-default-fullname2">
+															aria-describedby="basic-icon-default-fullname2" required>
 													</div>
-												</div>
-											</div>
-											<br>
-											<div class="row">
-												<div class="col mb-0">
-													<label class="form-label" for="basic-icon-default-fullname">
-														Select Subject Name 
-													</label>
-													<div class="input-group input-group-merge">
-														<select name="subjectMaster" class="select1 form-select" id="subjectbox">
-															<option value="open this select menu...">Select Subject</option>
-															<c:forEach items="${subject}" var="subject">
-																<option value="${subject.subjectId}" id="abc">${subject.subjectName} </option>
-															</c:forEach>
-
-															<% String s = request.getParameter("subjectMaster"); out.println(s); %>
-														</select>
-													</div>
-												</div>
-												<div class="col mb-0">
-													<label class="form-label" for="basic-icon-default-fullname">
-														Enter Topic 
-													</label>
-													<div class="input-group input-group-merge">
-														<select id="comboboxTopic" name="topicMaster" class="select2 form-select"></select>
-													</div>
-												</div>
-											</div>
-											<br>
-											<div class="row">
-												<div class="mb-3">
-													<label class="form-label" for="country">
-														Difficulty Level Name
-													</label> 
-													<select name="difficultyLevelMaster" class="select2 form-select">
-														<option value="open this select menu...">
-															Select Level
-														</option>
-														<c:forEach items="${difficultyLevelMaster}"
-															var="difficultyLevelMaster">
-															<option value="${difficultyLevelMaster.levelId}"
-																selected="selected">${difficultyLevelMaster.levelName}
-															</option>
-														</c:forEach>
-													</select>
 												</div>
 											</div>
 										</div>
@@ -417,13 +411,7 @@ body {
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
-							<div class="row">
-								<div class="col mb-3">
-									<label for="nameBasic" class="form-label">Question Id</label> 
-									<input type="text" id="questionId" name="questionId"
-										class="form-control" placeholder="Enter Question" />
-								</div>
-							</div>
+							<input type="hidden" id="questionId" name="questionId" class="form-control" />
 							<div class="row">
 								<div class="col mb-3">
 									<label for="nameBasic" class="form-label">Question Name</label>
@@ -431,7 +419,6 @@ body {
 										class="form-control" placeholder="Enter Question" />
 								</div>
 							</div>
-
 							<div class="row">
 								<div class="col mb-0">
 									<label class="form-label" for="basic-icon-default-fullname"> Enter Option 1 </label>
@@ -530,7 +517,7 @@ body {
 									</div>
 								</div>
 							</div>
-							<br><br>
+							<br>
 							<div class="row">
 								<div class="col mb-3">
 									<label class="form-label" for="basic-icon-default-fullname"> Difficulty Level</label> 

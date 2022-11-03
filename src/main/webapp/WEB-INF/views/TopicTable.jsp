@@ -24,7 +24,7 @@
 		<div class="layout-container">
 			
 			<!-- sidebar-->
-			<jsp:include page="sidebar.jsp" />
+			<jsp:include page="sidebarUser.jsp" />
 			<!-- Layout container -->
 			<div class="layout-page">
 				<!-- navbar -->
@@ -37,7 +37,22 @@
 						<h4 class="fw-bold py-3 mb-4">
 							<span class="text-muted fw-light">Tables /</span> Topic Table
 						</h4>
-						
+						<p style="position: absolute !important; margin-top: -40px;">
+							<c:set var="message" scope="page" value="${message}" />
+							<c:if test="${not empty message}">
+								<div class="alert" role="alert" style="position: absolute !important; color: green; margin-top: -58px; margin-left: -50px;">
+									<b> ${message}</b>
+								</div>
+							</c:if>
+							<c:set var="wrongmessage" scope="page" value="${wrongmessage}" />
+							<c:if test="${not empty wrongmessage}">
+								<div class="alert" role="alert"
+									style="position: absolute !important; color: red; margin-top: -41px; margin-left: -75px;">
+									<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										${wrongmessage}</b>
+								</div>
+							</c:if>
+						</p>
 						<!-- Add Topic Form -->
 						<form action="saveTopic" method="post">
 							<div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
@@ -58,7 +73,7 @@
 															Select Subject
 														</option>
 														<c:forEach items="${subject}" var="subject">
-															<option value="${subject.subjectId}" selected="selected">
+															<option value="${subject.subjectId}" selected>
 																${subject.subjectName}
 															</option>
 														</c:forEach>
@@ -73,7 +88,7 @@
 														class="input-group-text"><i class="bx bx-list-ul"></i>
 													</span>
 													<input type="text" name="topicName" class="form-control"
-														id="basic-icon-default-fullname"
+														id="basic-icon-default-fullname" required
 														placeholder="Enter Topic Name"
 														aria-label="Enter Subject Name"
 														aria-describedby="basic-icon-default-fullname2">
@@ -158,8 +173,7 @@
 						<div class="modal-body">
 							<div class="row">
 								<div class="col mb-3">
-									<label for="nameBasic" class="form-label">Topic Id</label> 
-									<input type="text" id="topicId" name="topicId" class="form-control" placeholder="Enter Name" />
+									<input type="hidden" id="topicId" name="topicId" class="form-control" placeholder="Enter Name" readonly/>									
 								</div>
 							</div>
 
@@ -178,7 +192,7 @@
 							<div class="row">
 								<div class="col mb-3">
 									<label for="exampleFormControlTextarea1" class="form-label">Topic Name</label> 
-									<input type="text" id="topicName" name="topicName" class="form-control" placeholder="Enter Name" />
+									<input type="text" id="topicName" name="topicName" class="form-control" placeholder="Enter Name" required="required"/>
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -190,6 +204,7 @@
 						</div>
 					</div>
 				</div>
+			</div>
 		</form>
 	</div>
 </body>

@@ -22,6 +22,17 @@ public class UserServiceImpl implements UserService{
 		
 		userMaster.setCreatedDate(new Date());
 		userMaster.setModifyDate(new Date());
+		userMaster.setRole("Faculty");
+		userRepository.save(userMaster);
+	}
+	
+//	Method to save  User Deatails	
+	@Override
+	public void createAdmin(UserMaster userMaster) {
+		
+		userMaster.setCreatedDate(new Date());
+		userMaster.setModifyDate(new Date());
+		userMaster.setRole("Pending");
 		userRepository.save(userMaster);
 	}
 
@@ -31,7 +42,14 @@ public class UserServiceImpl implements UserService{
 		
 		return userRepository.findAll();
 	}
-
+	
+//	Method return All User Details
+	@Override
+	public List<UserMaster> getAllFaculty(String role) {
+		List<UserMaster> userMaster=userRepository.findAllFaculty(role);
+		return userMaster;
+	}
+	
 //	Method Return User By Id details from database 
 	@Override
 	public UserMaster getUserbyId(int userId) {

@@ -16,7 +16,7 @@
 <meta name="description" content="" />
 
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="../assets/img/favicon/bhonsala.jpg " style="width:200px;height:200px" />
+<link rel="icon" type="image/x-icon" href="../assets/img/favicon/cdacLogo.jpg " style="width:200px;height:200px" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,16 +48,13 @@
 	<div class="container-xxl">
 		<div class="authentication-wrapper authentication-basic container-p-y">
 			
-			<!-- Register -->
 			<div class="card">
 				<div class="card-body">
-				
 					<!-- Logo -->
 					<h1 style="text-align: center;">
 						<img src="../assets/img/avatars/b.png" alt="image" style="height: 75px" />
 					</h1>
-
-					<p style="position: absolute !important; margin-top: -45px;">
+					<p style="position: absolute !important; margin-top: -40px;">
 						<c:set var="message" scope="page" value="${message}" />
 						<c:if test="${not empty message}">
 							<div class="alert" role="alert" style="position: absolute !important; color: green; margin-top: -58px; margin-left: -50px;">
@@ -67,7 +64,7 @@
 						<c:set var="wrongmessage" scope="page" value="${wrongmessage}" />
 						<c:if test="${not empty wrongmessage}">
 							<div class="alert" role="alert"
-								style="position: absolute !important; color: red; margin-top: -58px; margin-left: -50px;">
+								style="position: absolute !important; color: red; margin-top: -32px; margin-left: -105px;">
 								<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									${wrongmessage}</b>
 							</div>
@@ -75,7 +72,18 @@
 					</p>
 					
 					<!-- /Logo -->
-					<form id="formAuthentication" class="mb-3" action="/" method="POST">
+					<form id="formAuthentication" class="mb-3" action="/loginUser" method="POST">
+						<h1 style="text-align: center;">Login</h1>
+						<div class="row">
+							<div class="mb-3">
+								<label class="form-label" for="role">Role </label> 
+								<select name="role" class="select2 form-select" required>
+									<option value=""> Select Role </option>
+									<option>Faculty</option>
+ 									<option>Institute</option>
+								</select>
+							</div>
+						</div>		
 						<div class="mb-3">
 							<label for="email" class="form-label"> Username</label> <input type="text" class="form-control" id="email" name="userName"
 								placeholder="Enter your email or username" autofocus required="required" />
@@ -88,17 +96,15 @@
 								<input type="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
 									title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
 									class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-									aria-describedby="password" /> <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+									aria-describedby="password" required="required" /> <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
 							</div>
 						</div>
-
 						<a href="/ForgetPassword"> <small>Forgot Password?</small></a>
-
 						<div class="mb-3">
 							<button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
 						</div>
 					</form>
-
+					
 					<p class="text-center">
 						<span>New on our platform?</span> <a href="/register"> <span>Create an account</span> </a>
 					</p>
@@ -108,7 +114,6 @@
 	</div>
 
 	<!-- Core JS -->
-	<!-- build:js assets/vendor/js/core.js -->
 	<script src="../assets/vendor/libs/jquery/jquery.js"></script>
 	<script src="../assets/vendor/libs/popper/popper.js"></script>
 	<script src="../assets/vendor/js/bootstrap.js"></script>
@@ -119,8 +124,6 @@
 
 	<!-- Main JS -->
 	<script src="../assets/js/main.js"></script>
-
-	<!-- Place this tag in your head or just before your close body tag. -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.qbank.entity.UserMaster;
-import com.qbank.repository.UserRepository;
 import com.qbank.service.QuestionService;
 import com.qbank.service.SubjectService;
 import com.qbank.service.TestMetaDataService;
@@ -46,9 +44,6 @@ public class UserController {
 	
 	@Autowired
 	private TopicService topicService;
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	@Autowired
 	TestMetaDataService testMetaDataService;
@@ -77,8 +72,30 @@ public class UserController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/indexUser")
+	public ModelAndView viewDashboard1(ModelAndView mv, Model m) {
+		int subjectCount = subjectService.countSubjectReport();
+		m.addAttribute("subjectCount", subjectCount);
+		int questionCount = questionService.countQuestionReport();
+		m.addAttribute("questionCount", questionCount);
+		int topicCount = topicService.countTopicReport();
+		m.addAttribute("topicCount", topicCount);
+		
+		int testCount = testMetaDataService.countTestReport();
+		m.addAttribute("testCount", testCount);
+		
+		mv = new ModelAndView("indexUser");
+		return mv;
+	}
+	
 	@RequestMapping(value = "/register")
 	public ModelAndView userForm(ModelAndView mv, Model m) {
+		return mv;
+	}
+	
+	//Faculty Register
+	@RequestMapping(value = "/UserRegister")
+	public ModelAndView userForm1(ModelAndView mv, Model m) {
 		return mv;
 	}
 	
@@ -87,16 +104,48 @@ public class UserController {
 		return mv;
 	}
 	
+	//Admin registration
 	@RequestMapping(value = "/saveUser")
-	public ModelAndView registerStudent(ModelAndView mv,Model m, @ModelAttribute("user") UserMaster user) throws Exception {
-		userServiceImpl.createUser(user);
-		mv = new ModelAndView("login");
+	public ModelAndView registerStudent1(ModelAndView mv,Model m, @ModelAttribute("user") UserMaster user) {
+		String wrongmessage = "";
+		try {
+			wrongmessage = "Successfully Register as Institute";
+			m.addAttribute("wrongmessage", wrongmessage);
+			userServiceImpl.createAdmin(user);
+			viewLogin(mv, m);
+			mv = new ModelAndView("login");
+		}catch(Exception e) {
+			wrongmessage = "Username allready exist";
+			
+			m.addAttribute("wrongmessage", wrongmessage);
+			viewLogin(mv, m);
+			mv = new ModelAndView("register");
+		}
+		return mv;
+	}
+
+	//Admin register a user
+	@RequestMapping(value = "/saveUser1")
+	public ModelAndView registerStudent(ModelAndView mv,Model m, @ModelAttribute("user") UserMaster user) {
+		String wrongmessage = "";
+		try {
+			userServiceImpl.createUser(user);
+			mv = new ModelAndView("redirect:/manageUser");
+		}catch(Exception e) {
+			wrongmessage = "Username allready exist";
+			
+			m.addAttribute("wrongmessage", wrongmessage);
+			viewLogin(mv, m);
+			mv = new ModelAndView("UserRegister");
+		}
 		return mv;
 	}
 	
+	// Display Faculty Info in Institute Section
 	@RequestMapping(value = "/manageUser" ,method = RequestMethod.GET)
 	public ModelAndView manageUser(ModelAndView mv , Model model) {
-		List<UserMaster> user = userServiceImpl.getAllUser();
+		String role = "Faculty";
+		List<UserMaster> user = userServiceImpl.getAllFaculty(role);
 		model.addAttribute("user", user);
 		return mv;
 	}
@@ -107,7 +156,7 @@ public class UserController {
 		UserMaster userMaster = userServiceImpl.getUserbyId(userId);
 		return new ResponseEntity<>(userMaster, HttpStatus.OK);
 	}
-
+	
 //	API to Update Details	
 	@PutMapping("/updateUserById/{userId}")
 	public ResponseEntity<UserMaster> updateUserById(@PathVariable(value = "userId") int userId,
@@ -116,18 +165,19 @@ public class UserController {
 		userServiceImpl.updateUser(userId, userMaster);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
-//	API to Delete Details
-	@DeleteMapping("/deleteUserById/{userId}")
-	public ResponseEntity<UserMaster> DeleteUser(@PathVariable(value = "userId") int userId) {
+	
+	@RequestMapping(value = "/deleteUser/{userId}")
+	public ModelAndView deleteUser(ModelAndView mv,@PathVariable("userId") int userId,Model m) {
 		userServiceImpl.deleteUser(userId);
-		return new ResponseEntity<>(HttpStatus.OK);
+		manageUser(mv, m);
+		mv = new ModelAndView("redirect:/manageUser");
+		return mv;
 	}
 	
-	@PostMapping("/")
-	public ModelAndView loginUser(@RequestParam(name="userName") String userName,@RequestParam(name="password") String password,
+	//User and Admin login request
+	@PostMapping("/loginUser")
+	public ModelAndView loginUser1(@RequestParam(name="userName") String userName,@RequestParam(name="password") String password, @RequestParam(name="role") String role,
 			ModelAndView mv,Model m,HttpServletRequest request){
-		String sucessmessage = "";
 		String wrongmessage = "";
 		HttpSession session=request.getSession();
 		UserMaster usermaster =userServiceImpl.findByUserNameAndPassword(userName, password);
@@ -138,13 +188,24 @@ public class UserController {
 			m.addAttribute("wrongmessage", wrongmessage);
 			viewLogin(mv, m);
 			mv = new ModelAndView("login");
-		}
-		else if ((usermaster.getUserName().equals(userName)) && (usermaster.getPassword().equals(password))) {
+		}else if ((usermaster.getUserName().equals(userName)) && (usermaster.getPassword().equals(password)) && ((usermaster.getRole().equals(role)) && usermaster.getRole().equals("Faculty"))) {
+			
+			session.setAttribute("userId",usermaster.getUserId());
+			session.setAttribute("userName",usermaster.getUserName());
+			viewLogin(mv, m);
+			mv = new ModelAndView("indexUser");
+		}else if ((usermaster.getUserName().equals(userName)) && (usermaster.getPassword().equals(password)) && ((usermaster.getRole().equals(role)) && usermaster.getRole().equals("Institute"))) {
 			
 			session.setAttribute("userId",usermaster.getUserId());
 			session.setAttribute("userName",usermaster.getUserName());
 			viewLogin(mv, m);
 			mv = new ModelAndView("index");
+		}else if ((usermaster.getUserName().equals(userName)) && (usermaster.getPassword().equals(password)) && usermaster.getRole().equals("Pending")) {
+			
+			wrongmessage = "Please wait....!! Your Institute request not approved by superuser";
+			m.addAttribute("wrongmessage", wrongmessage);
+			viewLogin(mv, m);
+			mv = new ModelAndView("login");	
 		}else {
 			wrongmessage = "Credential Failed!";
 			m.addAttribute("wrongmessage", wrongmessage);
@@ -164,10 +225,16 @@ public class UserController {
 		return template.update(sql);
 	}
 	
+	@RequestMapping(value = "/aboutUs")
+	public ModelAndView aboutUs(ModelAndView mv, Model m) {
+		mv = new ModelAndView("aboutUs");
+		return mv;
+	}
+	
 	@RequestMapping(value = "/logout")
 	public ModelAndView logout(ModelAndView mv, Model m, HttpServletRequest request) {
 		request.getSession().invalidate();
-		mv = new ModelAndView("login");
+		mv = new ModelAndView("redirect:/");
 		return mv;
 	}
 }
