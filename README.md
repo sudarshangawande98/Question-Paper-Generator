@@ -38,9 +38,6 @@ mvn clean install
 ```
 mvn spring-boot:run
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Frontend Functionality
 
 🔹Login/Register: Authentication pages for user login and registration.<br>
